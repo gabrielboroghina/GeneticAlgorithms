@@ -1,0 +1,9 @@
+public static int fitness(int i){
+	//functia performanta - calculeaza modulul diferentei dintre suma dorita si suma curenta
+	//pentru un individ din populatie
+	int s,j;
+	s=0;
+	for(j=1;j<=n;j++)
+		s+=val[pop[i][j]];
+	return Math.abs(S-s);
+	}

@@ -1,0 +1,111 @@
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class main {
+	public static int S,m,n,NrPop=1400, NrMutatii=50;
+	public static int val[]=new int[300];
+	public static int[][] pop=new int[1700][300];//retine indivizii populatiei
+	//si numarul de puncte fixe (coloana n+1) pe cate o linie
+
+	public static void ordonare(){
+	//clasificarea indivizilor dupa valorile crescatoare ale
+	//functiei de performanta
+	int i,j,k,aux;
+	for(i=1;i<NrPop;i++)
+		for(j=i+1;j<=NrPop;j++)
+			if(pop[i][n+1]>pop[j][n+1])
+				for(k=1;k<=n+1;k++){
+					aux=pop[i][k];
+					pop[i][k]=pop[j][k];
+					pop[j][k]=aux;
+					}
+	}
+
+	public static void generare(){
+	//generarea populatiei initiale in mod aleator
+	int i,j,k,x,sw;
+	for(i=1;i<=NrPop-200;i++){
+		for(j=1;j<=n;j++){
+			x=ThreadLocalRandom.current().nextInt(1,m+1);
+			pop[i][j]=x;
+			}
+		pop[i][n+1]=fitness(i);
+		}
+	}
+
+	public static void mutatie(){
+		//mutatiile genetice au fost modelate prin alegerea,
+		//in mod aleator, a unei configuratii de bancnote si inversarea poz. unor
+		//elemente, selectate tot aleator
+		int i,N,M,P,aux;
+		for(i=1;i<=NrMutatii;i++){
+			N=ThreadLocalRandom.current().nextInt(1,NrPop-201);
+			//generam nodul M
+			M=ThreadLocalRandom.current().nextInt(1,n);
+			//generam nodul P
+			P=ThreadLocalRandom.current().nextInt(1,m+1);
+			pop[N][M]=P;
+			pop[N][n+1]=fitness(N);
+			}
+		}
+
+	public static void crossover(){
+	//generatie noua - pentru doua trasee
+	//vom crea doua noi configuratii, asfel:
+	//-prima configuratie continua, de la intersectie, pe cel de-a doua configuratie
+	//-a doua configuratie, continua de la intersesctie, pe prima configuratie
+	int i,j,k,M,N,sw,l;
+	for(i=NrPop-200+1;i<=NrPop+100;i++){
+		M=ThreadLocalRandom.current().nextInt(1,NrPop-201);
+		N=ThreadLocalRandom.current().nextInt(1,NrPop-201);
+		k=ThreadLocalRandom.current().nextInt(1,n);
+		
+		//prima noua solutie se adauga la populatie
+		for(j=1;j<=k;j++){
+			if (pop[M][j]==0) System.out.print(j+" "+M+"\n");
+			pop[i][j]=pop[M][j];}
+		for(j=k+1;j<=n;j++)
+			pop[i][j]=pop[N][j];
+		
+		for(j=1;j<=k;j++)
+			pop[i+100][j]=pop[N][j];
+		for(j=k+1;j<=n;j++)
+			pop[i+100][j]=pop[M][j];
+		
+	   pop[i][n+1]=fitness(i);
+	   pop[i+100][n+1]=fitness(i+100);
+	  }
+	}
+
+	public static void main(String[] args) throws IOException {
+		Scanner cin=new Scanner(System.in);
+		Scanner f=new Scanner(new File("suma.in"));
+		S=f.nextInt(); //Suma pe care vrem sa o platim
+		n=f.nextInt(); //numarul de bancnote cu care formam suma
+		m=f.nextInt(); //tipuri de bancnote disponibile
+		for (int i=1;i<=m;i++) val[i]=f.nextInt();
+		f.close();
+		int i,j;
+
+	//algoritm genetic pentru plata unei sume de bani
+	generare();
+	System.out.println("Introduceti numarul de generatii:");
+	int NrGeneratii=cin.nextInt();
+	cin.close();
+	for(i=1;i<=NrGeneratii;i++){
+		crossover();
+		mutatie();
+		ordonare();
+	}
+	System.out.println("Nrgeneratii="+NrGeneratii+"\nSuma dorita="+S);
+	int t;
+	for (j=1;j<=n;j++)
+		if (pop[j][n+1]==pop[1][n+1])
+		{
+			t=0;
+		for(i=1;i<=n;i++){
+			System.out.print(val[pop[j][i]]+" "); t+=val[pop[j][i]];}
+			System.out.println("suma="+t);
+		}
+	}

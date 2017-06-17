@@ -1,0 +1,44 @@
+﻿
+    <div class="jumbotron">
+        <div class="container">
+            <h2>Algoritmi Genetici</h2><br />
+            
+                Algoritmii genetici reprezinta o metoda euristica de cautare a unei solutii optime pentru o problema,
+             bazandu-se pe faptul ca cele mai bune solutii gasite la un moment dat (conform unei functii de evaluare) raman intotdeauna in lista solutiilor finale posibile.
+             Un astfel de algoritm porneste de la o populatie initiala construita aleator si incearca sa o optimizeze cu fiecare noua generatie
+             obtinuta prin metode similare procesului evolutiv: mutatie, incrucisare (crossover) si selectie.
+             In final, in functie de numarul de generatii se obtine o solutie cat mai apropiata de cea corecta. <br /><br />
+                <div class="col-sm-5 col-md-4">
+                    <a href="@Url.Action("comis_voiajor", "Home", new { sw = false, fisier = "cv.txt" })">
+                        <div class="thumbnail tile tile-medium tile-purple" style="border:none">
+                            <br />
+                            <h3>
+                                Comis Voiajor
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+            <div class="col-sm-5 col-md-4">
+                <a href="@Url.Action("permutari", "Home", new { sw = false, fisier = "perm.txt" })">
+                    <div class="thumbnail tile tile-medium tile-sun-flower" style="border:none">
+                        <br />
+                        <h3>
+                            Permutari fara puncte fixe
+                        </h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-5 col-md-4">
+                <a href="@Url.Action("suma", "Home", new { sw = false, fisier = "suma.txt" })">
+                    <div class="thumbnail tile tile-medium tile-emerald" style="border:none">
+                        <br />
+                        <h3>
+                            Plata unei sume de bani
+                        </h3>
+                    </div>
+                </a>
+            </div>
+                <br />
+           
+        </div>
+    </div>

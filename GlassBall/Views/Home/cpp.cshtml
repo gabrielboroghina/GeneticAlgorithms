@@ -1,0 +1,93 @@
+﻿<body style="background-color:#f8f8f8" ng-app="ngapp" ng-controller="tabshow as ctrl">
+
+    <div id="wrapper">
+        <div id="sidebar-wrapper" style="background-color:#f3f3f3">
+            <ul class="sidebar-nav">
+                <div class="container">
+
+                    <br /><h2><b>&nbsp;Files</b></h2>______________________________________<br /><br />
+                    <button type="button" class="btn btn-danger" aria-label="Center Align" ng-click="ctrl.add()">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add file
+                    </button><br /><br />
+                    <h4><span class="label label-warning">main.cpp</span></h4>
+                    <h4 ng-repeat="file in ctrl.files"><span class="label label-default">{{file.fullname}}</span></h4>
+
+                    <br /><br /><br /><br /><br /><br /><br /><h3><b>&nbsp;New project</b></h3>_____________________________________<br /><br />
+                    <a href="@Url.Action("cpp", "Home", new { sw = false, fisier = "c_init.txt" })" onclick="return exit()">
+                        <div class="thumbnail tile tile-small tile-wisteria" style="border-color:#f3f3f3"><img src="~/Content/c_sm.png"/></div>
+                    </a>
+                    <a href="@Url.Action("cpp", "Home", new { sw = false, fisier = "cpp_init.txt" })" onclick="return exit()">
+                        <div class="thumbnail tile tile-small tile-lime" style="border-color:#f3f3f3"><img src="~/Content/cpp_sm.png" /></div>
+                    </a>
+                    <a href="@Url.Action("java", "Home", new { sw = false, fisier = "java_init.txt" })" onclick="return exit()">
+                        <div class="thumbnail tile tile-small tile-silver" style="border-color:#f3f3f3"><img src="~/Content/j_sm.png" /></div>
+                    </a> 
+                    
+                </div>
+            </ul>
+        </div>
+
+        <div class="container-fluid" style="padding-left:20px">
+            <br />
+            <div class="btn-toolbar">
+                <button type="button" class="btn btn-default" aria-label="Left Align" id="start">
+                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>&nbsp;Build & Run
+                </button>
+                <button type="button" class="btn btn-default" aria-label="Left Align" id="stop">
+                    <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>&nbsp;Stop
+                </button>
+            </div>
+            <br />
+
+            <ul id="myTab" class="nav nav-tabs" role="tablist">
+                <li id="li1" class="active"><a href="#tab0" role="tab" data-toggle="tab">Source</a></li>
+                <li ng-repeat="file in ctrl.files" id="li{{file.nr}}">
+                    <a href="#tab{{file.name}}" role="tab" data-toggle="tab">
+                        {{file.fullname}}&nbsp;
+                        <button type="button" class="btn btn-warning btn-xs" ng-click="ctrl.remove(file.nr,file.name)"><span class="glyphicon glyphicon-remove"></span></button>
+                    </a>
+                </li>
+                <li id="last"><a href="" ng-click="ctrl.add()"><span class="glyphicon glyphicon-plus"></span> Add File</a></li>
+            </ul>
+            <br />
+
+
+            <div id="edit" class="tab-content">
+                <div class="tab-pane active" id="tab0">
+                    <textarea id="cpp">@Html.Action("afis_sursa", "Home", new { fisier = ViewBag.fisier })</textarea>
+                </div>
+            </div>
+
+            <br /><br />
+
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="#build" aria-controls="build" role="tab" data-toggle="tab">Build log</a></li>
+                <li role="presentation"><a href="#console" aria-controls="console" role="tab" data-toggle="tab">Console</a></li>
+            </ul>
+            <div class="tab-content">
+                <div style="height:200px; background-color:#ffffff" role="tabpanel" class="tab-pane active" id="build"></div>
+                <div style="height:250px;" role="tabpanel" class="tab-pane" id="console"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/Scripts/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/Scripts/TERMINAL_C.js"></script>
+
+    <script>
+        function exit()
+        {
+            return confirm('You will lose the current project. Are you sure?');
+        }
+    </script>
+
+    <script>
+        var cppEditor = CodeMirror.fromTextArea(document.getElementById("cpp"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            indentUnit:4,
+            mode: "text/x-c++src"
+        });
+    </script>
+</body>

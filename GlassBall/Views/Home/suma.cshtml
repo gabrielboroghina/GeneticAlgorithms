@@ -1,0 +1,88 @@
+﻿<body style="background-color:#e2e2e2" ng-app="ngapp" ng-controller="tabshow as ctrl">
+    <style>
+        #java {
+            position: relative;
+            width: auto;
+            height: 430px;
+        }
+    </style>
+
+    <script src="~/Scripts/prism.js"></script>
+    <div id="wrapper">
+
+        <div class="container-fluid" style="padding-left:20px">
+            <div class="col-md-1"></div>
+            <div class="col-md-8" style="box-shadow:0px 2px 5px #888888; background-color:white">
+                <br />
+
+                <h2>Plata unei sume de bani</h2>
+                <br />
+                Se dau m tipuri de bancnote (de diferite valori), pentru fiecare tip un numar nelimitat de bancnote. Sa se determine o modalitate de a plati suma S 
+            cu n bancnote.<br />
+                Rezolvand aceasta problema cu un algoritm genetic, se va obtine o configuratie de bancnote cu suma cat mai apropiata de S. 
+            (functia de performanta va returna modulul diferentei dintre suma obtinuta si S). In final sunt afisate primele configuratii, adica cele cu suma S.<br />
+
+                <pre><code class="language-java">@Html.Action("afis_sursa", "Home", new { fisier = ViewBag.fisier })</code></pre>
+
+                <div class="btn-toolbar">
+                    <button type="button" class="btn btn-default" aria-label="Left Align" id="start">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>&nbsp;Build & Run
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Left Align" id="stop">
+                        <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>&nbsp;Stop
+                    </button>
+                </div>
+                <br />
+
+
+                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    <li id="li1" class="active"><a href="#tab0" role="tab" data-toggle="tab">Source</a></li>
+                    <li ng-repeat="file in ctrl.files" id="li{{file.nr}}">
+                        <a href="#tab{{file.name}}" role="tab" data-toggle="tab">
+                            {{file.fullname}}&nbsp;
+                            <button type="button" class="btn btn-warning btn-xs" ng-click="ctrl.remove(file.nr,file.name)"><span class="glyphicon glyphicon-remove"></span></button>
+                        </a>
+                    </li>
+                    <li id="last"><a href="" ng-click="ctrl.add()"><span class="glyphicon glyphicon-plus"></span> Add Tab</a></li>
+                </ul>
+                <br />
+
+
+                <div id="edit" class="tab-content">
+                    <div class="tab-pane active" id="tab0">
+                        <div id="java">@Html.Action("afis_sursa", "Home", new { fisier = "suma_f.txt" })</div>
+                    </div>
+                </div>
+
+                <br /><br />
+
+                <ul class="nav nav-pills">
+                    <li role="presentation" class="active"><a href="#build" aria-controls="build" role="tab" data-toggle="tab">Build log</a></li>
+                    <li role="presentation"><a href="#console" aria-controls="console" role="tab" data-toggle="tab">Console</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div style="height:200px; background-color:#ffffff" role="tabpanel" class="tab-pane active" id="build"></div>
+                    <div style="height:250px; overflow:auto" role="tabpanel" class="tab-pane" id="console"></div>
+                </div>
+                <br />
+            </div><div class="col-md-1"></div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/Scripts/TERMINAL_Java.js"></script>
+
+    <script>
+        function exit()
+        {
+            return confirm('You will lose the current project. Are you sure?');
+        }
+    </script>
+    <script>
+    var jeditor = ace.edit("java");
+    jeditor.setTheme("ace/theme/chrome");
+    jeditor.getSession().setMode("ace/mode/java");
+    jeditor.setShowPrintMargin(false);
+    jeditor.setFontSize(13);
+    </script>
+</body>
