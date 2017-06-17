@@ -1,4 +1,4 @@
-# GeneticAlgorithms
+# Genetic Algorithms
 This Web Application illustrates how Genetic Algorithms can be used to solve some problems by optimizing the previous solutions.
 
 There are three problems described:
